@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ⚡ SEO EZ — AI Keyword Research Dashboard
 
-## Getting Started
+<p align="center">
+  <b>ค้นหาคีย์เวิร์ดคุณภาพสำหรับ SEO ในวินาทีเดียว ด้วยพลัง AI</b>
+  <br />
+  <i>พิมพ์คำเดียว ได้ชุดคีย์เวิร์ดพร้อมคะแนนศักยภาพ เรียงจากดีที่สุด</i>
+</p>
 
-First, run the development server:
+<p align="center">
+  <img src="https://img.shields.io/badge/Next.js-15-black?logo=next.js" />
+  <img src="https://img.shields.io/badge/TypeScript-5-blue?logo=typescript" />
+  <img src="https://img.shields.io/badge/Tailwind-4-38bdf8?logo=tailwindcss" />
+  <img src="https://img.shields.io/badge/shadcn%2Fui-latest-black" />
+  <img src="https://img.shields.io/badge/OpenRouter-AI-10b981" />
+</p>
+
+---
+
+## ✨ Features
+
+### 🔍 Core
+- **Smart Search** — พิมพ์คำค้นเดียว ได้คีย์เวิร์ดคุณภาพ 10-50 คำ เรียงตาม score (0-100)
+- **Multi-Model AI** — เลือกโมเดลฟรีได้หลายตัว (DeepSeek, Qwen3, Llama, Mistral, Gemma...)
+- **Auto Language** — พิมพ์ไทยได้ไทย พิมพ์อังกฤษได้อังกฤษ อัตโนมัติ
+- **Search Modes** — 4 โหมด: ทั่วไป / Long-tail / คำถาม / เชิงพาณิชย์
+
+### 🎯 Productivity
+- **Click-to-Copy** — คลิกที่ chip เพื่อคัดลอกทันที
+- **Copy All** — คัดลอกทั้งหมดในคลิกเดียว
+- **Export** — ดาวน์โหลดเป็น TXT / CSV (รองรับ Excel ภาษาไทย) / JSON
+- **Favorites ⭐** — บันทึกคีย์เวิร์ดที่ถูกใจไว้ใช้ภายหลัง
+- **History** — ประวัติการค้นหาย้อนหลัง 50 รายการ
+- **Stats** — สถิติการใช้งาน (ค้นหา/สร้าง/คัดลอก)
+
+### 🎨 Design
+- **Dark/Light Theme** — สลับได้ทันที (ค่าเริ่มต้น = Dark)
+- **Glassmorphism UI** — การ์ดกระจก + Gradient + Floating Glow Blobs
+- **Smooth Animations** — chip เด้ง, hover lift, scroll reveal
+- **Responsive** — ใช้งานได้ลื่นทุกหน้าจอ (Mobile → Desktop)
+- **Keyboard Shortcut** — กด `/` เพื่อ focus ช่องค้นหา
+
+### 🛡️ Quality
+- **Type-Safe** — TypeScript + Zod validation ทุกชั้น
+- **Error Boundary** — กันแอปพังทั้งหน้า
+- **Smart Parser** — AI ตอบผิดรูปแบบก็กู้ข้อมูลออกมาได้
+- **Secure** — API Key อยู่ฝั่ง server เท่านั้น ไม่เคยรั่ว
+
+---
+
+## 🚀 Quick Start
+
+### 1. Clone & Install
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+git clone <your-repo>
+cd seo-ez
+npm install

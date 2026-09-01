@@ -1,26 +1,291 @@
-@import "tailwindcss";
+/* ================================================================
+   SEO EZ — Design System (globals.css)
+   ----------------------------------------------------------------
+   ไฟล์นี้คือ "หัวใจของหน้าตาแอป" ทั้งหมด
+   - ธีมสี (สว่าง/มืด) ของ shadcn/ui ผ่าน CSS Variables
+   - Keyframes และคลาส Effect สำเร็จรูป (แก้ว, ไล่เฉด, ลอย, กริด)
+   ⚠️ แก้สี/Effect ของแอปทั้งระบบ ให้แก้ที่นี่ที่เดียว
+   ================================================================ */
 
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ----------------------------------------------------------------
+   🌞 ธีมสว่าง (Light)
+   ---------------------------------------------------------------- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --radius: 0.75rem;
+
+  --background: hsl(210 25% 98%);
+  --foreground: hsl(240 10% 8%);
+
+  --card: hsl(0 0% 100%);
+  --card-foreground: hsl(240 10% 8%);
+
+  --popover: hsl(0 0% 100%);
+  --popover-foreground: hsl(240 10% 8%);
+
+  /* สีหลักของแอป: เขียวมรกต (สื่อถึงการเติบโตของ SEO) */
+  --primary: hsl(160 84% 34%);
+  --primary-foreground: hsl(0 0% 100%);
+
+  --secondary: hsl(210 16% 93%);
+  --secondary-foreground: hsl(240 10% 12%);
+
+  --muted: hsl(210 16% 93%);
+  --muted-foreground: hsl(240 5% 42%);
+
+  --accent: hsl(187 80% 92%);
+  --accent-foreground: hsl(187 80% 18%);
+
+  --destructive: hsl(0 72% 45%);
+  --destructive-foreground: hsl(0 0% 100%);
+
+  --border: hsl(214 16% 88%);
+  --input: hsl(214 16% 84%);
+  --ring: hsl(160 84% 39%);
+
+  /* สีชุดกราฟ/สถิติ (เขียว → ฟ้า → ม่วง → ทอง → ชมพู) */
+  --chart-1: hsl(160 84% 34%);
+  --chart-2: hsl(188 86% 42%);
+  --chart-3: hsl(262 83% 58%);
+  --chart-4: hsl(45 93% 47%);
+  --chart-5: hsl(340 82% 52%);
+
+  /* ตัวแปร Sidebar (เผื่อใช้ในอนาคต) */
+  --sidebar: hsl(210 25% 97%);
+  --sidebar-foreground: hsl(240 10% 8%);
+  --sidebar-primary: hsl(160 84% 34%);
+  --sidebar-primary-foreground: hsl(0 0% 100%);
+  --sidebar-accent: hsl(210 16% 93%);
+  --sidebar-accent-foreground: hsl(240 10% 12%);
+  --sidebar-border: hsl(214 16% 88%);
+  --sidebar-ring: hsl(160 84% 39%);
+
+  /* เส้นกริดพื้นหลัง (โหมดสว่าง) */
+  --grid-line: rgb(0 0 0 / 0.05);
 }
 
+/* ----------------------------------------------------------------
+   🌙 ธีมมืด (Dark) — ค่าเริ่มต้นของแอป
+   ---------------------------------------------------------------- */
+.dark {
+  --background: hsl(230 28% 5.5%);
+  --foreground: hsl(210 25% 95%);
+
+  --card: hsl(230 24% 8.5%);
+  --card-foreground: hsl(210 25% 95%);
+
+  --popover: hsl(230 24% 8.5%);
+  --popover-foreground: hsl(210 25% 95%);
+
+  /* สีหลักของแอป: เขียวมรกตสว่างขึ้นสำหรับพื้นมืด */
+  --primary: hsl(158 64% 52%);
+  --primary-foreground: hsl(230 28% 6%);
+
+  --secondary: hsl(230 18% 14%);
+  --secondary-foreground: hsl(210 25% 92%);
+
+  --muted: hsl(230 18% 13%);
+  --muted-foreground: hsl(226 12% 62%);
+
+  --accent: hsl(230 18% 17%);
+  --accent-foreground: hsl(210 25% 95%);
+
+  --destructive: hsl(0 72% 55%);
+  --destructive-foreground: hsl(0 0% 100%);
+
+  --border: hsl(230 16% 16%);
+  --input: hsl(230 16% 18%);
+  --ring: hsl(158 64% 52%);
+
+  --chart-1: hsl(158 64% 52%);
+  --chart-2: hsl(188 86% 53%);
+  --chart-3: hsl(262 83% 66%);
+  --chart-4: hsl(45 93% 58%);
+  --chart-5: hsl(340 82% 60%);
+
+  --sidebar: hsl(230 24% 7.5%);
+  --sidebar-foreground: hsl(210 25% 95%);
+  --sidebar-primary: hsl(158 64% 52%);
+  --sidebar-primary-foreground: hsl(230 28% 6%);
+  --sidebar-accent: hsl(230 18% 14%);
+  --sidebar-accent-foreground: hsl(210 25% 92%);
+  --sidebar-border: hsl(230 16% 16%);
+  --sidebar-ring: hsl(158 64% 52%);
+
+  /* เส้นกริดพื้นหลัง (โหมดมืด) */
+  --grid-line: rgb(255 255 255 / 0.045);
+}
+
+/* ----------------------------------------------------------------
+   🔗 เชื่อม CSS Variables เข้ากับ Tailwind (ห้ามลบส่วนนี้)
+   ---------------------------------------------------------------- */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ----------------------------------------------------------------
+   🧱 กฎพื้นฐานของทั้งแอป
+   ---------------------------------------------------------------- */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  /* สีพื้นตอนลากคลุมตัวอักษร (selection) */
+  ::selection {
+    background: hsl(158 64% 52% / 0.35);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ----------------------------------------------------------------
+   🎬 Keyframes — จังหวะการเคลื่อนไหวของ Effect ทั้งหมด
+   ---------------------------------------------------------------- */
+
+/* ตัวหนังสือไล่เฉด วิ่งวนซ้าย→ขวา */
+@keyframes gradient-x {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+/* ก้อนแสงลอยไปมาช้า ๆ (พื้นหลัง) */
+@keyframes float {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  33% { transform: translate3d(40px, -30px, 0) scale(1.06); }
+  66% { transform: translate3d(-30px, 20px, 0) scale(0.97); }
+}
+
+/* แสงวูบวาบแบบนุ่มนวล */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+
+/* แสงวิ่งบนปุ่ม/กล่องตอน Loading (Shimmer) */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ----------------------------------------------------------------
+   ✨ คลาส Effect สำเร็จรูป (เอาไปใช้ได้เลยทั่วแอป)
+   ---------------------------------------------------------------- */
+@layer utilities {
+
+  /* 🌈 ตัวหนังสือไล่เฉด เขียว→ฟ้า แบบเคลื่อนไหว
+     ใช้กับ: หัวข้อสำคัญ เช่น "SEO EZ", คำโปรย */
+  .text-gradient {
+    @apply bg-gradient-to-r from-emerald-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent;
+    background-size: 200% auto;
+    animation: gradient-x 6s linear infinite;
+  }
+
+  /* 🪟 การ์ดกระจก Glassmorphism
+     ใช้กับ: กล่องผลลัพธ์, แผง History, Settings */
+  .glass-panel {
+    @apply border border-black/5 bg-white/60 backdrop-blur-xl;
+    @apply dark:border-white/10 dark:bg-white/[0.04];
+    box-shadow:
+      0 8px 32px rgb(0 0 0 / 0.18),
+      inset 0 1px 0 rgb(255 255 255 / 0.06);
+  }
+
+  /* 🕸️ พื้นหลังลายกริด จางหายด้านบน (คู่กับก้อนแสงใน background-fx) */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 30%, transparent 100%);
+  }
+
+  /* 🎈 ก้อนแสงลอย (ใช้คู่กับ blur ก้อนใหญ่ใน background-fx) */
+  .animate-float {
+    animation: float 12s ease-in-out infinite;
+  }
+  .animate-float-slow {
+    animation: float 18s ease-in-out 2s infinite reverse;
+  }
+
+  /* 💡 แสงวูบวาบเบา ๆ */
+  .animate-pulse-glow {
+    animation: pulse-glow 4s ease-in-out infinite;
+  }
+
+  /* ✨ พื้นผิว Shimmer สำหรับ Skeleton ตอนโหลด */
+  .animate-shimmer {
+    background: linear-gradient(
+      110deg,
+      transparent 25%,
+      rgb(255 255 255 / 0.08) 50%,
+      transparent 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.8s linear infinite;
+  }
+}
+
+/* ----------------------------------------------------------------
+   🖱️ Scrollbar แบบบางสวย (สำหรับ Chrome/Edge บน Windows)
+   ---------------------------------------------------------------- */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-foreground);
 }
