@@ -82,9 +82,11 @@ OPENROUTER_MODEL=qwen/qwen3-235b-a22b:free
 ```
 Run Development Server
 
+```
 npm run dev
+```
 
-เปิด 
+เปิด Browser
 ```
 http://localhost:3000
 ```
