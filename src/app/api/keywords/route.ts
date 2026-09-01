@@ -92,19 +92,45 @@ export async function POST(req: Request) {
     const keywords = await generateKeywords(seed, finalSettings);
     return NextResponse.json({ keywords });
   } catch (err) {
+    // 🐞 Debug logging — ดู error จริงใน console ฝั่ง server
+    console.error("[/api/keywords] Error details:", {
+      message: err instanceof Error ? err.message : String(err),
+      name: err instanceof Error ? err.name : "Unknown",
+      stack: err instanceof Error ? err.stack : undefined,
+      seed,
+      model: finalSettings.model,
+    });
+
     // กรณี Error จาก OpenRouter (คีย์ผิด / rate limit / โมเดลหาย ฯลฯ)
     if (err instanceof OpenRouterError) {
       const status =
         err.status && err.status >= 400 && err.status < 600 ? err.status : 502;
-      return NextResponse.json({ error: err.message }, { status });
+      return NextResponse.json(
+        { 
+          error: err.message,
+          debug: process.env.NODE_ENV === "development" ? {
+            status: err.status,
+            model: finalSettings.model,
+          } : undefined,
+        }, 
+        { status }
+      );
     }
 
     // กรณี AI ตอบมั่วจน Parser กู้ไม่สำเร็จ
     if (err instanceof KeywordParseError) {
-      return NextResponse.json({ error: err.message }, { status: 502 });
+      return NextResponse.json(
+        { 
+          error: err.message,
+          debug: process.env.NODE_ENV === "development" ? {
+            model: finalSettings.model,
+          } : undefined,
+        }, 
+        { status: 502 }
+      );
     }
 
-    // กรณีไม่คาดคิด: log ไว้ฝั่งเซิร์ฟเวอร์เท่านั้น (ไม่เผยรายละเอียดออกภายนอก)
+    // กรณีไม่คาดคิด
     console.error("[/api/keywords] Unexpected error:", err);
     return NextResponse.json(
       { error: "เกิดข้อผิดพลาดภายในเซิร์ฟเวอร์ — ลองใหม่อีกครั้ง" },

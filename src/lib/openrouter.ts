@@ -5,11 +5,12 @@
  * หน้าที่: ส่ง Prompt ไปยัง OpenRouter และนำคำตอบมาผ่าน Parser
  * - มี Timeout กันค้าง
  * - แปลงรหัส Error ทุกกรณีเป็นข้อความภาษาไทยที่ผู้ใช้เข้าใจ
+ * - แสดง error detail จาก OpenRouter เพื่อช่วย debug
  * ⚠️ ห้าม import ไฟล์นี้ใน Client Component เด็ดขาด
  *    (เพราะมีการอ่าน process.env.OPENROUTER_API_KEY)
  * ================================================================
  */
-import { APP_NAME, APP_URL, DEFAULT_MODEL_ID, REQUEST_TIMEOUT_MS } from "@/lib/config";
+import { APP_NAME, APP_URL, DEFAULT_MODEL_ID, FALLBACK_MODELS, REQUEST_TIMEOUT_MS } from "@/lib/config";
 import { parseKeywordResponse } from "@/lib/parser";
 import { buildKeywordPrompt } from "@/lib/prompts";
 import type { KeywordItem, SearchSettings } from "@/types/seo";
@@ -81,9 +82,9 @@ export async function generateKeywords(
     );
   }
 
-  /* ---- เลือกโมเดล: จาก UI > จาก .env > ค่าเริ่มต้น ---- */
+  /* ---- เลือกโมเดล: จาก UI > จาก .env > ค่าเริ่มต้น > fallback ---- */
   const model =
-    settings.model || process.env.OPENROUTER_MODEL || DEFAULT_MODEL_ID;
+    settings.model || process.env.NEXT_PUBLIC_OPENROUTER_MODEL || FALLBACK_MODELS[0]?.id || "";
 
   /* ---- เรียก API พร้อม Timeout ---- */
   let res: Response;
@@ -119,7 +120,37 @@ export async function generateKeywords(
 
   /* ---- แปลง Error ทุกกรณีให้เป็นภาษาไทย ---- */
   if (!res.ok) {
-    throw mapStatusToError(res.status);
+    /* 🐞 อ่าน error body จาก OpenRouter เพื่อดูสาเหตุที่แท้จริง */
+    let errorDetail = "";
+    try {
+      const errData = (await res.json()) as { error?: { message?: string } | string };
+      if (typeof errData.error === "string") {
+        errorDetail = errData.error;
+      } else if (errData.error?.message) {
+        errorDetail = errData.error.message;
+      }
+    } catch {
+      /* ถ้าอ่าน body ไม่ได้ ก็ไม่เป็นไร */
+    }
+
+    const baseErr = mapStatusToError(res.status);
+
+    /* 🐞 Log error detail ฝั่ง server (สำหรับ debug) */
+    console.error(`[OpenRouter] ${res.status} Error:`, {
+      model,
+      status: res.status,
+      detail: errorDetail || "(no detail)",
+    });
+
+    /* ถ้าเป็น 400 หรือ 404 และมีรายละเอียดจาก OpenRouter ให้ต่อท้าย */
+    if ((res.status === 400 || res.status === 404) && errorDetail) {
+      throw new OpenRouterError(
+        `${baseErr.message} | รายละเอียดจาก OpenRouter: ${errorDetail}`,
+        res.status
+      );
+    }
+
+    throw baseErr;
   }
 
   /* ---- ดึงเนื้อหาคำตอบ ---- */
@@ -129,6 +160,10 @@ export async function generateKeywords(
     throw new OpenRouterError("AI ไม่ส่งข้อมูลกลับมา — ลองค้นหาใหม่อีกครั้ง");
   }
 
+  /* 🐞 Log raw response (สำหรับ debug) */
+  console.log(`[OpenRouter] Raw response from ${model} (first 300 chars):`, content.slice(0, 300));
+
   /* ---- ผ่านด่านตรวจความสะอาด ก่อนคืนผล ---- */
   return parseKeywordResponse(content, settings.count);
+
 }
