@@ -104,5 +104,5 @@ http://localhost:3000
 📄 License
 MIT
 <p align="center">
-Made with ⚡ by <b>SEO EZ</b>
+Made with ⚡ by <b>Ton Like IT</b>
 </p>
