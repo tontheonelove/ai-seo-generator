@@ -14,6 +14,10 @@
   <img src="https://img.shields.io/badge/OpenRouter-AI-10b981" />
 </p>
 
+
+<img src=ex.png>
+
+
 ---
 
 ## ✨ Features
