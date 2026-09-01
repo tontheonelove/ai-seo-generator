@@ -52,6 +52,53 @@
 ### 1. Clone & Install
 
 ```bash
-git clone <your-repo>
-cd seo-ez
+git clone https://github.com/tontheonelove/ai-seo-generator.git
+cd ai-seo-generator
 npm install
+
+```
+---
+
+### 2. ตั้งค่า Environment
+
+คัดลอก .env.example เป็น .env.local:
+
+```
+cp .env.example .env.local
+```
+
+แก้ไข .env.local:
+
+```
+# คีย์จาก https://openrouter.ai/keys
+OPENROUTER_API_KEY=sk-or-v1-xxxxx
+
+# โมเดลเริ่มต้น (ต้องลงท้ายด้วย :free)
+OPENROUTER_MODEL=qwen/qwen3-235b-a22b:free
+```
+Run Development Server
+
+npm run dev
+
+เปิด 
+```
+http://localhost:3000
+```
+
+---
+
+1. Push repo ขึ้น GitHub
+2. ไปที่ vercel.com/new → Import Git Repository
+3. เลือก repository seo-ez
+4. เพิ่ม Environment Variables:
+5. OPENROUTER_API_KEY = คีย์จาก OpenRouter
+6. OPENROUTER_MODEL = โมเดลที่ต้องการใช้ (เช่น qwen/qwen3-235b-a22b:free)
+7. กด Deploy ⚡
+---
+
+
+📄 License
+MIT
+<p align="center">
+Made with ⚡ by <b>SEO EZ</b>
+</p>
