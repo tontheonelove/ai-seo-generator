@@ -2,25 +2,28 @@
 
 /**
  * ================================================================
- * KeywordStats — แถบสถิติการใช้งาน 3 ช่อง
+ * KeywordStats — แถบสถิติการใช้งาน 3 ช่อง + ปุ่ม Reset
  * ----------------------------------------------------------------
  * แสดง 3 ตัวเลข:
  * 1. จำนวนครั้งของการค้นหา (Searches)
  * 2. จำนวนคีย์เวิร์ดที่ AI สร้างให้ทั้งหมด (Keywords)
  * 3. จำนวนครั้งที่ผู้ใช้คัดลอก (Copied)
  *
- * 🎨 ใช้ Glass panel + ไอคอนไล่สี + Animation เด้งตอนอัปเดตตัวเลข
+ *  เพิ่มปุ่ม Reset (มุมขวาบน) เพื่อรีเซ็ตทุกอย่างเหมือนผู้ใช้ใหม่
  * ================================================================
  */
 import { motion } from "motion/react";
-import { Search, Sparkles, Copy } from "lucide-react";
+import { Search, Sparkles, Copy, RotateCcw } from "lucide-react";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 import type { AppStats } from "@/types/seo";
 
 interface KeywordStatsProps {
   stats: AppStats;
+  onReset?: () => void;
 }
 
-export function KeywordStats({ stats }: KeywordStatsProps) {
+export function KeywordStats({ stats, onReset }: KeywordStatsProps) {
   const items = [
     {
       label: "ค้นหาทั้งหมด",
@@ -45,8 +48,31 @@ export function KeywordStats({ stats }: KeywordStatsProps) {
     },
   ];
 
+  const handleReset = () => {
+    if (!onReset) return;
+    // ยืนยันก่อน reset
+    if (window.confirm("ต้องการรีเซ็ตข้อมูลทั้งหมดใช่หรือไม่? (ประวัติ, favorites, สถิติจะถูกลบ)")) {
+      onReset();
+      toast.success("รีเซ็ตข้อมูลเรียบร้อยแล้ว ✅");
+    }
+  };
+
   return (
-    <div className="grid gap-3 sm:grid-cols-3">
+    <div className="relative grid gap-3 sm:grid-cols-3">
+      {/* 🔄 ปุ่ม Reset (มุมขวาบน) */}
+      {(stats.searches > 0 || stats.keywordsGenerated > 0 || stats.copied > 0) && (
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={handleReset}
+          className="absolute -top-2 right-0 h-7 gap-1 text-xs text-muted-foreground hover:text-destructive"
+          aria-label="รีเซ็ตข้อมูลทั้งหมด"
+        >
+          <RotateCcw className="size-3" />
+          รีเซ็ต
+        </Button>
+      )}
+
       {items.map((item) => (
         <div
           key={item.label}

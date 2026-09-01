@@ -95,6 +95,7 @@ export default function Home() {
     deleteHistoryEntry,
     clearHistory,
     incrementCopied,
+    resetAll,
     history,
     stats,
   } = useKeywordSearch();
@@ -158,7 +159,7 @@ export default function Home() {
 
       {/* 2️⃣ Stats */}
       <div className="mb-6">
-        <KeywordStats stats={stats} />
+        <KeywordStats stats={stats} onReset={resetAll} />
       </div>
 
       {/* 3️⃣ Search + 4️⃣ Settings */}

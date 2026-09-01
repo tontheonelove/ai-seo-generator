@@ -160,6 +160,29 @@ export function useKeywordSearch() {
     setStats((prev) => ({ ...prev, copied: prev.copied + 1 }));
   }, [setStats]);
 
+  /**
+   * resetAll — รีเซ็ตทุกอย่างให้เหมือนผู้ใช้ใหม่ครั้งแรก
+   * (ลบ history, favorites, stats, settings จาก localStorage)
+   */
+  const resetAll = useCallback(() => {
+    if (typeof window === "undefined") return;
+    try {
+      // ลบเฉพาะ keys ของ SEO EZ (ไม่ลบของแอปอื่น)
+      Object.keys(window.localStorage)
+        .filter((key) => key.startsWith("seo-ez-"))
+        .forEach((key) => window.localStorage.removeItem(key));
+      
+      // รีเซ็ต state ในหน่วยความจำ
+      setHistory([]);
+      setStats({ searches: 0, keywordsGenerated: 0, copied: 0 });
+      setKeywords([]);
+      setError(null);
+      setCurrentSeed("");
+    } catch (err) {
+      console.error("[resetAll] ไม่สามารถรีเซ็ต:", err);
+    }
+  }, [setHistory, setStats]);
+
   return {
     keywords,
     isLoading,
@@ -171,6 +194,7 @@ export function useKeywordSearch() {
     deleteHistoryEntry,
     clearHistory,
     incrementCopied,
+    resetAll,
     history,
     stats,
   };
