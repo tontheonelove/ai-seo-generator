@@ -17,39 +17,28 @@
 
 <img src=ex.png>
 
-
 ---
 
 ## ✨ Features
 
-### 🔍 Core Tools
-- **Keyword Generator** — สร้างคีย์เวิร์ดคุณภาพ 10-50 คำ พร้อมคะแนนศักยภาพ (0-100)
-- **Title Generator** (Coming Soon) — สร้างชื่อเรื่อง SEO 5 แบบ พร้อมเหตุผล
-- **Description Generator** (Coming Soon) — สร้าง Meta Description ที่ดึงดูด พร้อมนับตัวอักษร
+### 🔍 1. Keyword Generator
+- พิมพ์คำค้นเดียว ได้คีย์เวิร์ดคุณภาพ 10-50 คำ เรียงตาม score (0-100)
+- 4 โหมด: ทั่วไป / Long-tail / คำถาม / เชิงพาณิชย์
+- เลือกโมเดล AI ได้เองจาก Dropdown
+- Click-to-Copy, Copy All, Export (TXT/CSV/JSON)
+- Favorites ⭐ + History + Stats
 
-### 🎯 Productivity
-- **Click-to-Copy** — คลิกที่ chip เพื่อคัดลอกทันที
-- **Copy All** — คัดลอกทั้งหมดในคลิกเดียว
-- **Export** — ดาวน์โหลดเป็น TXT / CSV (รองรับ Excel ภาษาไทย) / JSON
-- **Favorites ** — บันทึกคีย์เวิร์ดที่ถูกใจไว้ใช้ภายหลัง
-- **History** — ประวัติการค้นหาย้อนหลัง 50 รายการ
-- **Stats** — สถิติการใช้งาน (ค้นหา/สร้าง/คัดลอก)
+### 📝 2. Title Generator
+- สร้าง 5 Titles คุณภาพสูงเรียงตามคะแนน CTR
+- พร้อมเหตุผลสั้น ๆ ว่าทำไมแต่ละ Title ถึงดี
+- ใช้ MiniMax M3 (Fixed) — เก่งเรื่องภาษาทั้งไทย/อังกฤษ
 
-### 🎨 Design
-- **Dark/Light Theme** — สลับได้ทันที (ค่าเริ่มต้น = Dark)
-- **Glassmorphism UI** — การ์ดกระจก + Gradient + Floating Glow Blobs
-- **Smooth Animations** — chip เด้ง, hover lift, scroll reveal
-- **Responsive** — ใช้งานได้ลื่นทุกหน้าจอ (Mobile → Desktop)
-- **Keyboard Shortcut** — กด `/` เพื่อ focus ช่องค้นหา
-
-### ️ Quality
-- **Type-Safe** — TypeScript + Zod validation ทุกชั้น
-- **Error Boundary** — กันแอปพังทั้งหน้า
-- **Smart Parser** — AI ตอบผิดรูปแบบก็กู้ข้อมูลออกมาได้
-- **Secure** — API Key อยู่ฝั่ง server เท่านั้น ไม่เคยรั่ว
+### 🎬 3. Description Generator
+- สร้าง Description แบบยาวครบชุดสำหรับ YouTube / Facebook
+- โครงสร้าง: Hook → Intro → ✅ Bullets → CTA → #Hashtags
+- แสดงจำนวนตัวอักษร + จำนวนบรรทัด (แสดงตามจริง ไม่ตัดข้อความ)
 
 ---
-
 
 ## 🚀 Quick Start
 
