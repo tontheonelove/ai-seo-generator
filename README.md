@@ -82,6 +82,22 @@ http://localhost:3000
 
 ---
 
+## 🚢 Deploy แบบไม่มี GitHub (ใช้ Vercel CLI)
+
+1. สมัคร [vercel.com](https://vercel.com) ด้วย **Email** (ฟรี)
+2. ติดตั้ง CLI: `npm install -g vercel`
+3. Login: `vercel login` → เลือก Email
+4. ในโฟลเดอร์โปรเจกต์: `vercel` (ตอบคำถามตามปกติ)
+5. เพิ่ม env vars:
+   ```bash
+   vercel env add OPENROUTER_API_KEY
+   vercel env add NEXT_PUBLIC_OPENROUTER_MODELS
+   vercel env add NEXT_PUBLIC_OPENROUTER_MODEL
+   ```
+6. Deploy: `vercel --prod`
+
+---
+
 1. Push repo ขึ้น GitHub
 
 2. ไปที่ vercel.com/new → Import Git Repository
