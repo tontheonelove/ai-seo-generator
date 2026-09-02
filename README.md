@@ -82,19 +82,67 @@ http://localhost:3000
 
 ---
 
-## 🚢 Deploy แบบไม่มี GitHub (ใช้ Vercel CLI)
+## 🚢 Deploy to Vercel (ไม่ต้องมี GitHub ก็ทำได้)
 
-1. สมัคร [vercel.com](https://vercel.com) ด้วย **Email** (ฟรี)
-2. ติดตั้ง CLI: `npm install -g vercel`
-3. Login: `vercel login` → เลือก Email
-4. ในโฟลเดอร์โปรเจกต์: `vercel` (ตอบคำถามตามปกติ)
-5. เพิ่ม env vars:
-   ```bash
-   vercel env add OPENROUTER_API_KEY
-   vercel env add NEXT_PUBLIC_OPENROUTER_MODELS
-   vercel env add NEXT_PUBLIC_OPENROUTER_MODEL
-   ```
-6. Deploy: `vercel --prod`
+### ขั้นที่ 1: Login Vercel บนหน้าเว็บ
+
+- ไปที่ [vercel.com](https://vercel.com) → สมัครด้วย **Email** (ฟรี) หรือ login ให้เรียบร้อย
+
+### ขั้นที่ 2: Login ผ่าน CLI
+
+```bash
+npx vercel login
+```
+
+ระบบจะเด้งไปหน้าเว็บ → กด **Allow** เพื่ออนุญาตการเชื่อมต่อ
+
+### ขั้นที่ 3: สร้างโปรเจกต์ครั้งแรก
+
+```bash
+npx vercel
+```
+
+ตอบคำถามตามนี้:
+
+| คำถาม | คำตอบ |
+|-------|--------|
+| Set up and deploy? | **Y** |
+| Which scope? | เลือกบัญชีของคุณ |
+| Link to existing project? | **N** |
+| Project name? | กด Enter |
+| Directory? | กด Enter |
+| Override settings? | **N** |
+
+### ขั้นที่ 4: เพิ่ม Environment Variables (3 ตัว)
+
+```bash
+npx vercel env add OPENROUTER_API_KEY
+npx vercel env add NEXT_PUBLIC_OPENROUTER_MODELS
+npx vercel env add NEXT_PUBLIC_OPENROUTER_MODEL
+```
+
+แต่ละตัว:
+- **ประเภทตัวแปร:** `OPENROUTER_API_KEY` เลือก **Secret** / อีก 2 ตัวเลือก **Config**
+- **Environments:** เลือกให้ครบทั้ง 3 (Production, Preview, Development)
+- **ค่าที่ใส่:**
+  - `OPENROUTER_API_KEY` → คีย์จาก OpenRouter ของคุณ
+  - `NEXT_PUBLIC_OPENROUTER_MODELS` → เช่น `minimax/minimax-m3:free|MiniMax M3 (แนะนำ)` (⚠️ วางแบบ **ไม่มี**เครื่องหมายคำพูด)
+  - `NEXT_PUBLIC_OPENROUTER_MODEL` → `minimax/minimax-m3:free`
+
+### ขั้นที่ 5: Deploy Production
+
+```bash
+npx vercel --prod
+```
+
+รอ 1-3 นาที → ได้ URL Production เช่น `https://your-app.vercel.app`
+
+### ขั้นที่ 6: ทดสอบเปิดใช้งาน
+
+เปิด URL ที่ได้ → ทดสอบครบ 3 เครื่องมือ (Keyword / Title / Description)
+
+> 💡 **ครั้งต่อไปที่แก้โค้ด:** แค่รัน `npx vercel --prod` อีกครั้ง = อัปเดตทันที
+
 
 ---
 
