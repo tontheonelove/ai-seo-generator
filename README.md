@@ -67,7 +67,7 @@ cp .env.example .env.local
 OPENROUTER_API_KEY=sk-or-v1-xxxxx
 
 # โมเดลเริ่มต้น (ต้องลงท้ายด้วย :free)
-OPENROUTER_MODEL=qwen/qwen3-235b-a22b:free
+OPENROUTER_MODEL=minimax/minimax-m3:free
 ```
 Run Development Server
 
