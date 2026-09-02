@@ -2,22 +2,20 @@
 
 /**
  * ================================================================
- * Sidebar — แถบเมนูด้านซ้าย (รองรับ Desktop + Mobile)
+ * Sidebar — แถบเมนูด้านซ้าย (เฉพาะ Desktop)
  * ----------------------------------------------------------------
  * 3 เมนูหลัก:
  * 1. Keyword Generator (คีย์เวิร์ด)
  * 2. Title Generator (หัวข้อ)
  * 3. Description Generator (คำอธิบาย)
  *
- * 📱 Responsive:
- * - Desktop: แสดงด้านซ้าย
- * - Mobile: แปลงเป็น Bottom Navigation
+ * 📌 ไม่มี Settings + Theme Toggle แล้ว
+ *    (Theme Toggle อยู่ที่ Header มุมขวาบนที่เดียว)
  * ================================================================
  */
 import { usePathname } from "next/navigation";
 import { LayoutGrid, Search, Type, FileText } from "lucide-react";
 import Link from "next/link";
-import { ThemeToggle } from "@/components/layout/theme-toggle";
 
 export function Sidebar() {
   const pathname = usePathname();
@@ -48,7 +46,7 @@ export function Sidebar() {
 
   return (
     <div className="flex h-screen flex-col border-r border-border/50 bg-background">
-      {/* 顶部: โลโก้ + ชื่อแอป */}
+      {/* บนสุด: โลโก้ + ชื่อแอป */}
       <div className="flex items-center justify-between border-b border-border/50 px-4 py-3">
         <div className="flex items-center gap-2">
           <div className="flex size-8 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-500 to-cyan-500">
@@ -79,14 +77,6 @@ export function Sidebar() {
             ))}
           </ul>
         </nav>
-      </div>
-
-      {/* 底部: Settings + Theme Toggle */}
-      <div className="border-t border-border/50 px-4 py-3">
-        <div className="flex items-center justify-between">
-          <div className="text-xs text-muted-foreground">Settings</div>
-          <ThemeToggle />
-        </div>
       </div>
     </div>
   );
