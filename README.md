@@ -143,22 +143,6 @@ npx vercel --prod
 
 > 💡 **ครั้งต่อไปที่แก้โค้ด:** แค่รัน `npx vercel --prod` อีกครั้ง = อัปเดตทันที
 
-
----
-
-1. Push repo ขึ้น GitHub
-
-2. ไปที่ vercel.com/new → Import Git Repository
-
-3. เลือก repository Ai Content Tools Generator
-
-4. เพิ่ม Environment Variables:
-
-5. OPENROUTER_API_KEY = คีย์จาก OpenRouter
-
-6. OPENROUTER_MODEL = โมเดลที่ต้องการใช้ (เช่น qwen/qwen3-235b-a22b:free)
-
-7. กด Deploy ⚡
 ---
 
 
