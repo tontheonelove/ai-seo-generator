@@ -2,8 +2,9 @@
 
 /**
  * ================================================================
- * Home — หน้า Dashboard หลักของ SEO EZ
+ * Home — หน้า Dashboard หลักของ ACT (Keyword Generator)
  * ----------------------------------------------------------------
+ * URL: /
  * โครงสร้างหน้า (บน → ล่าง, ซ้าย → ขวา):
  * 1. Hero: พาดหัว + คำอธิบาย
  * 2. KeywordStats: สถิติการใช้งาน 3 ช่อง
@@ -12,15 +13,6 @@
  * 5. Grid หลัก:
  *    - ซ้าย (กว้าง): KeywordChips แสดงผลคีย์เวิร์ด
  *    - ขวา (แคบ): HistoryPanel + FavoritesPanel
- *
- * 🧠 State ทั้งหมด:
- * - input: คำที่ผู้ใช้กำลังพิมพ์
- * - settings: การตั้งค่า (ซิงค์ localStorage)
- * - favorites: คีย์เวิร์ดที่ถูกใจ (ซิงค์ localStorage)
- * - ส่วนที่เหลือจัดการโดย useKeywordSearch hook
- *
- * 🚀 Performance:
- * - ใช้ dynamic import สำหรับ KeywordChips เพื่อลด bundle size ตอนแรกโหลด
  * ================================================================
  */
 import { useState } from "react";
@@ -43,8 +35,6 @@ import type {
 
 /**
  * 🚀 Dynamic import สำหรับ KeywordChips
- * เหตุผล: component นี้ค่อนข้างหนัก (ใช้ motion, export menu)
- * การโหลดแบบ lazy จะช่วยให้หน้าโหลดเร็วขึ้น + แสดง skeleton ระหว่างรอ
  */
 const KeywordChips = dynamic(
   () =>
@@ -65,7 +55,7 @@ const KeywordChips = dynamic(
         </div>
       </div>
     ),
-    ssr: false, // ไม่ render ฝั่ง server เพื่อป้องกัน hydration issues
+    ssr: false,
   }
 );
 
@@ -95,7 +85,6 @@ export default function Home() {
     deleteHistoryEntry,
     clearHistory,
     incrementCopied,
-    resetAll,
     history,
     stats,
   } = useKeywordSearch();
@@ -159,7 +148,7 @@ export default function Home() {
 
       {/* 2️⃣ Stats */}
       <div className="mb-6">
-        <KeywordStats stats={stats} onReset={resetAll} />
+        <KeywordStats stats={stats} />
       </div>
 
       {/* 3️⃣ Search + 4️⃣ Settings */}

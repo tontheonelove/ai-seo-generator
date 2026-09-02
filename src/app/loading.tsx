@@ -27,7 +27,7 @@ export default function Loading() {
       </div>
 
       {/* ข้อความ */}
-      <h2 className="text-xl font-semibold">กำลังโหลด SEO EZ...</h2>
+      <h2 className="text-xl font-semibold">กำลังโหลด AI SEO GENERATOR...</h2>
       <p className="mt-2 text-sm text-muted-foreground">
         เตรียมความพร้อมระบบ AI ให้คุณ
       </p>

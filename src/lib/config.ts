@@ -15,7 +15,7 @@
 import type { KeywordLanguage, SearchMode, SearchSettings } from "@/types/seo";
 
 /** ชื่อแอป (ใช้ส่งให้ OpenRouter แสดงใน Dashboard) */
-export const APP_NAME = "SEO EZ";
+export const APP_NAME = "ACT - Ai Content Tools";
 
 /** URL ของแอป (ประกอบ Header ให้ OpenRouter) */
 export const APP_URL = "https://seo-ez.vercel.app";
@@ -25,10 +25,10 @@ export const APP_URL = "https://seo-ez.vercel.app";
  * 📌 อัปเดตล่าสุด 2026: รายชื่อโมเดลฟรีที่ยัง active
  */
 export const FALLBACK_MODELS: { id: string; label: string }[] = [
-  { id: "inclusionai/ling-3.0-flash-fin:free", label: "Ling 3.0 Flash (แนะนำ)" },
+  { id: "minimax/minimax-m3:free", label: "MiniMax M3 (แนะนำ) " },
+  { id: "inclusionai/ling-3.0-flash-fin:free", label: "Ling 3.0 Flash" },
   { id: "liquid/lfm-2.5-2.6b:free", label: "Liquid 2.5" },
   { id: "poolside/laguna-s-2.1:free", label: "Laguna S 2.1" },
-  { id: "minimax/minimax-m3:free", label: "MiniMax M3" },
   { id: "google/gemma-4-31b-it:free", label: "Gemma 4 31B" },
 ];
 

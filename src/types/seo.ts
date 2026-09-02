@@ -1,6 +1,5 @@
 /**
  * ================================================================
- * SEO EZ — Types กลางของทั้งแอป
  * ----------------------------------------------------------------
  * 📌 ทุกไฟล์ต้องใช้ Types จากที่นี่เท่านั้น ห้ามประกาศซ้ำที่อื่น
  * เพื่อให้ง่ายต่อการแก้ไขในอนาคต (แก้ที่เดียว = อัปเดตทั้งระบบ)
@@ -58,3 +57,55 @@ export interface AppStats {
   /** จำนวนครั้งที่ผู้ใช้คัดลอก */
   copied: number;
 }
+
+/** ================================================================
+ * Types สำหรับฟีเจอร์ใหม่ (Title & Description Generator)
+ * ================================================================ */
+
+/** ประเภทเครื่องมือ (ใช้เลือกใน API) */
+export type GenerateToolType = "keyword" | "title" | "description";
+
+/** 1 รายการ Title ที่ AI สร้าง (มาพร้อม score และเหตุผล) */
+export interface TitleItem {
+  title: string;
+  /** คะแนนความเหมาะสม (0-100) */
+  score: number;
+  /** เหตุผลสั้น ๆ ว่าทำไม Title นี้ถึงดี */
+  reason: string;
+}
+
+/** 1 รายการ Description ที่ AI สร้าง (มาพร้อมจำนวนตัวอักษร + highlights) */
+export interface DescriptionItem {
+  description: string;
+  /** จำนวนตัวอักษร (ต้องอยู่ในช่วง 140-160) */
+  charCount: number;
+  /** จุดเด่นของ Description นี้ (เช่น "มี CTA", "มี keyword") */
+  highlights: string[];
+}
+
+/** ================================================================
+ * Types สำหรับ Title & Description Favorites
+ * ================================================================ */
+
+/** Favorite item สำหรับ Title */
+export interface TitleFavoriteItem {
+  type: "title";
+  title: string;
+  keyword: string;
+  score: number;
+  savedAt: number;
+}
+
+/** Favorite item สำหรับ Description */
+export interface DescriptionFavoriteItem {
+  type: "description";
+  description: string;
+  input: string;
+  savedAt: number;
+}
+
+/** Union type สำหรับทุกประเภท favorite */
+export type AnyFavoriteItem =
+  | (FavoriteItem & { type?: "keyword" })
+  | TitleFavoriteItem
+  | DescriptionFavoriteItem;

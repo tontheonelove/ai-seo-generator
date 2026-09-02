@@ -5,16 +5,16 @@ import { BackgroundFX } from "@/components/layout/background-fx";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Toaster } from "@/components/ui/sonner";
+import { Sidebar } from "@/components/layout/sidebar";
+import { MobileNav } from "@/components/layout/mobile-nav";
 import "./globals.css";
 
 /**
  * ================================================================
  * RootLayout — โครงหน้ารวมของทั้งแอป (ทุกหน้าต้องผ่านไฟล์นี้)
  * ----------------------------------------------------------------
- * - ฟอนต์: Geist (ไม่มีหัว อ่านง่าย สไตล์โมเดิร์น)
- * - ธีม: ครอบด้วย ThemeProvider ค่าเริ่มต้น = โหมดมืด
- * - พื้นหลัง: แสงลอย + กริด จาก BackgroundFX
- * - Toaster: จุดแจ้งเตือน (Toast) ของทั้งแอป (เช่น "คัดลอกแล้ว ✅")
+ * 📌 ใช้ ThemeProvider ค่าเริ่มต้น = โหมดมืด
+ * 📌 มี Sidebar ด้านซ้าย (Desktop) + Bottom Nav (Mobile)
  * ================================================================
  */
 
@@ -28,14 +28,16 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-/* 📌 Metadata = SEO ของตัวแอปเอง ( ironically ต้องเป๊ะ! 😄 ) */
+/**
+ * 📌 Metadata = SEO ของตัวแอปเอง
+ */
 export const metadata: Metadata = {
   title: {
-    default: "SEO EZ — AI Keyword Research Dashboard",
-    template: "%s | SEO EZ",
+    default: "Ai Content Tools Generator",
+    template: "%s | ACT",
   },
   description:
-    "ค้นหาคีย์เวิร์ดคุณภาพสำหรับ SEO ในวินาทีเดียว ด้วยพลัง AI ผ่าน OpenRouter พร้อมคัดลอกได้ทันที",
+    "เครื่องมือสร้างเนื้อหา SEO ด้วย AI: ค้นหาคีย์เวิร์ด, สร้าง Title & Description คุณภาพสูง",
 };
 
 export default function RootLayout({
@@ -44,9 +46,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    /* suppressHydrationWarning = จำเป็น! เพราะ next-themes
-       จะแทรก class dark/light ตอนโหลด ซึ่งอาจไม่ตรงกับฝั่ง Server */
-    <html lang="th" suppressHydrationWarning>
+    <html lang="th" suppressHydrationWarning data-scroll-behavior="smooth">
       <body
         className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}
       >
@@ -56,17 +56,33 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
-          {/* ชั้นพื้นหลัง (ตรึงนิ่ง) */}
+          {/* Background FX */}
           <BackgroundFX />
 
-          {/* เนื้อหาหลักของแอป (ให้อยู่เหนือชั้นพื้นหลังเสมอด้วย z-10) */}
+          {/* Main Layout */}
           <div className="relative z-10 flex min-h-screen flex-col">
+            {/* Header อยู่ด้านบนสุด */}
             <Header />
-            <main className="flex-1">{children}</main>
-            <Footer />
+
+            {/* Content Area: Sidebar + Main */}
+            <div className="flex flex-1">
+              {/* Sidebar (สำหรับ Desktop ≥ lg) */}
+              <aside className="hidden lg:block w-60 shrink-0">
+                <Sidebar />
+              </aside>
+
+              {/* Main Content (pb-14 เว้นที่ให้ Bottom Nav บนมือถือ) */}
+              <div className="flex flex-1 flex-col pb-14 lg:pb-0">
+                <main className="flex-1">{children}</main>
+                <Footer />
+              </div>
+            </div>
+
+            {/* 📱 Bottom Navigation สำหรับมือถือ */}
+            <MobileNav />
           </div>
 
-          {/* จุดแจ้งเตือนทั้งแอป: แสดงด้านบนกลางจอ, มีสีตามสถานะ */}
+          {/* Toaster */}
           <Toaster richColors position="top-center" />
         </ThemeProvider>
       </body>

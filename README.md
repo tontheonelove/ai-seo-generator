@@ -1,9 +1,9 @@
-# ⚡ SEO EZ — AI Keyword Research Dashboard
+# ⚡ ACT — Ai Content Tools Generator
 
 <p align="center">
-  <b>ค้นหาคีย์เวิร์ดคุณภาพสำหรับ SEO ในวินาทีเดียว ด้วยพลัง AI</b>
+  <b>ชุดเครื่องมือ AI สำหรับสร้างคีย์เวิร์ด, ชื่อเรื่อง, และคำอธิบาย Meta Description</b>
   <br />
-  <i>พิมพ์คำเดียว ได้ชุดคีย์เวิร์ดพร้อมคะแนนศักยภาพ เรียงจากดีที่สุด</i>
+  <i>พิมพ์คำเดียว ได้ผลลัพธ์คุณภาพสูงพร้อมใช้งานทันที</i>
 </p>
 
 <p align="center">
@@ -22,17 +22,16 @@
 
 ## ✨ Features
 
-### 🔍 Core
-- **Smart Search** — พิมพ์คำค้นเดียว ได้คีย์เวิร์ดคุณภาพ 10-50 คำ เรียงตาม score (0-100)
-- **Multi-Model AI** — เลือกโมเดลฟรีได้หลายตัว (DeepSeek, Qwen3, Llama, Mistral, Gemma...)
-- **Auto Language** — พิมพ์ไทยได้ไทย พิมพ์อังกฤษได้อังกฤษ อัตโนมัติ
-- **Search Modes** — 4 โหมด: ทั่วไป / Long-tail / คำถาม / เชิงพาณิชย์
+### 🔍 Core Tools
+- **Keyword Generator** — สร้างคีย์เวิร์ดคุณภาพ 10-50 คำ พร้อมคะแนนศักยภาพ (0-100)
+- **Title Generator** (Coming Soon) — สร้างชื่อเรื่อง SEO 5 แบบ พร้อมเหตุผล
+- **Description Generator** (Coming Soon) — สร้าง Meta Description ที่ดึงดูด พร้อมนับตัวอักษร
 
 ### 🎯 Productivity
 - **Click-to-Copy** — คลิกที่ chip เพื่อคัดลอกทันที
 - **Copy All** — คัดลอกทั้งหมดในคลิกเดียว
 - **Export** — ดาวน์โหลดเป็น TXT / CSV (รองรับ Excel ภาษาไทย) / JSON
-- **Favorites ⭐** — บันทึกคีย์เวิร์ดที่ถูกใจไว้ใช้ภายหลัง
+- **Favorites ** — บันทึกคีย์เวิร์ดที่ถูกใจไว้ใช้ภายหลัง
 - **History** — ประวัติการค้นหาย้อนหลัง 50 รายการ
 - **Stats** — สถิติการใช้งาน (ค้นหา/สร้าง/คัดลอก)
 
@@ -43,13 +42,14 @@
 - **Responsive** — ใช้งานได้ลื่นทุกหน้าจอ (Mobile → Desktop)
 - **Keyboard Shortcut** — กด `/` เพื่อ focus ช่องค้นหา
 
-### 🛡️ Quality
+### ️ Quality
 - **Type-Safe** — TypeScript + Zod validation ทุกชั้น
 - **Error Boundary** — กันแอปพังทั้งหน้า
 - **Smart Parser** — AI ตอบผิดรูปแบบก็กู้ข้อมูลออกมาได้
 - **Secure** — API Key อยู่ฝั่ง server เท่านั้น ไม่เคยรั่ว
 
 ---
+
 
 ## 🚀 Quick Start
 

@@ -1,16 +1,18 @@
 /**
  * ================================================================
- * useKeywordSearch — หัวใจของหน้า Dashboard
+ * useKeywordSearch — หัวใจของหน้า Keyword Generator
  * ----------------------------------------------------------------
  * หน้าที่:
  * - จัดการ state ของการค้นหา (Loading, Error, Result)
- * - เรียก API /api/keywords พร้อม AbortController (ปุ่ม Cancel)
+ * - เรียก API /api/generate พร้อม AbortController (ปุ่ม Cancel)
  * - บันทึกผลการค้นหาลง History
  * - อัปเดต Stats (จำนวนครั้ง, จำนวนคีย์เวิร์ด)
  *
  * 🛡️ กัน BUG:
  * - ถ้าผู้ใช้กดค้นหาใหม่ขณะยังโหลดอยู่ → ยกเลิก request เก่าทันที
  * - ถ้า Component ถูก unmount ขณะยังโหลด → ยกเลิก request ป้องกัน setState บน component ที่ตายแล้ว
+ *
+ * 📌 อัปเดต Step 2: เปลี่ยนจาก /api/keywords เป็น /api/generate
  * ================================================================
  */
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -69,10 +71,15 @@ export function useKeywordSearch() {
       setCurrentSeed(seed);
 
       try {
-        const res = await fetch("/api/keywords", {
+        /* 🔄 เปลี่ยนจาก /api/keywords เป็น /api/generate + เพิ่ม toolType */
+        const res = await fetch("/api/generate", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ seed, settings }),
+          body: JSON.stringify({
+            toolType: "keyword", // 🆕 ระบุว่าเป็นการค้นหา keyword
+            seed,
+            settings,
+          }),
           signal: controller.signal,
         });
 
@@ -83,7 +90,7 @@ export function useKeywordSearch() {
           throw new Error(data.error || "เกิดข้อผิดพลาดในการค้นหา");
         }
 
-        /* กรณีสำเร็จ */
+        /* กรณีสำเร็จ (response format เหมือนเดิม: { keywords: [...] }) */
         const keywords = data.keywords as KeywordItem[];
         setKeywords(keywords);
 
@@ -137,7 +144,6 @@ export function useKeywordSearch() {
 
   /**
    * deleteHistoryEntry — ลบประวัติการค้นหา 1 รายการ
-   * @param id id ของรายการที่ต้องการลบ
    */
   const deleteHistoryEntry = useCallback(
     (id: string) => {
@@ -160,29 +166,6 @@ export function useKeywordSearch() {
     setStats((prev) => ({ ...prev, copied: prev.copied + 1 }));
   }, [setStats]);
 
-  /**
-   * resetAll — รีเซ็ตทุกอย่างให้เหมือนผู้ใช้ใหม่ครั้งแรก
-   * (ลบ history, favorites, stats, settings จาก localStorage)
-   */
-  const resetAll = useCallback(() => {
-    if (typeof window === "undefined") return;
-    try {
-      // ลบเฉพาะ keys ของ SEO EZ (ไม่ลบของแอปอื่น)
-      Object.keys(window.localStorage)
-        .filter((key) => key.startsWith("seo-ez-"))
-        .forEach((key) => window.localStorage.removeItem(key));
-      
-      // รีเซ็ต state ในหน่วยความจำ
-      setHistory([]);
-      setStats({ searches: 0, keywordsGenerated: 0, copied: 0 });
-      setKeywords([]);
-      setError(null);
-      setCurrentSeed("");
-    } catch (err) {
-      console.error("[resetAll] ไม่สามารถรีเซ็ต:", err);
-    }
-  }, [setHistory, setStats]);
-
   return {
     keywords,
     isLoading,
@@ -194,7 +177,6 @@ export function useKeywordSearch() {
     deleteHistoryEntry,
     clearHistory,
     incrementCopied,
-    resetAll,
     history,
     stats,
   };
