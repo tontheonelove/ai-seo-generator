@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/layout/theme-provider";
 import { BackgroundFX } from "@/components/layout/background-fx";
-import { Header } from "@/components/layout/header";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { Footer } from "@/components/layout/footer";
 import { Toaster } from "@/components/ui/sonner";
 import { Sidebar } from "@/components/layout/sidebar";
@@ -11,10 +11,10 @@ import "./globals.css";
 
 /**
  * ================================================================
- * RootLayout — โครงหน้ารวมของทั้งแอป (ทุกหน้าต้องผ่านไฟล์นี้)
+ * RootLayout — โครงหน้ารวมของทั้งแอป
  * ----------------------------------------------------------------
- * 📌 ใช้ ThemeProvider ค่าเริ่มต้น = โหมดมืด
- * 📌 มี Sidebar ด้านซ้าย (Desktop) + Bottom Nav (Mobile)
+ * 📌 ไม่มี Header แล้ว — โลโก้อยู่ใน Sidebar
+ * 📌 Theme Toggle เป็นปุ่มลอยมุมขวาบน (ใช้ได้ทุกหน้าจอ)
  * ================================================================
  */
 
@@ -28,9 +28,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-/**
- * 📌 Metadata = SEO ของตัวแอปเอง
- */
 export const metadata: Metadata = {
   title: {
     default: "Ai Content Tools Generator",
@@ -61,13 +58,15 @@ export default function RootLayout({
 
           {/* Main Layout */}
           <div className="relative z-10 flex min-h-screen flex-col">
-            {/* Header อยู่ด้านบนสุด */}
-            <Header />
+            {/* 🌙 Floating Theme Toggle (มุมขวาบน — ทุกหน้าจอ) */}
+            <div className="fixed right-4 top-4 z-50 rounded-full border border-border/50 bg-background/80 shadow-lg backdrop-blur-xl">
+              <ThemeToggle />
+            </div>
 
             {/* Content Area: Sidebar + Main */}
             <div className="flex flex-1">
-              {/* Sidebar (สำหรับ Desktop ≥ lg) */}
-              <aside className="hidden lg:block w-60 shrink-0">
+              {/* Sidebar (เฉพาะ Desktop ≥ lg) */}
+              <aside className="hidden w-60 shrink-0 lg:block">
                 <Sidebar />
               </aside>
 
