@@ -15,8 +15,6 @@
 </p>
 
 
-<img src=ex.png>
-
 ---
 
 ## ✨ Features
