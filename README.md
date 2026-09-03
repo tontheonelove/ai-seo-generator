@@ -44,8 +44,8 @@
 ### 1. Clone & Install
 
 ```bash
-git clone https://github.com/tontheonelove/ai-seo-generator.git
-cd ai-seo-generator
+git clone https://github.com/tontheonelove/Ai-Content-Tools.git
+cd Ai-Content-Tools
 npm install
 
 ```
