@@ -116,7 +116,7 @@ npx vercel
 
 ```bash
 npx vercel env add OPENROUTER_API_KEY
-npx vercel env add NEXT_PUBLIC_OPENROUTER_MODELS
+npx vercel env add NEXT_PUBLIC_OPENROUTER_MODELS (ข้ามได้ เนื่องจากค่านี้คือ Multimodel หากไม่ใช้ข้ามได้เลย)
 npx vercel env add NEXT_PUBLIC_OPENROUTER_MODEL
 ```
 
